@@ -30,9 +30,11 @@ function RegisterForm() {
 
       // redirect user to dashboard based on their role
       if(formData.role === "House Owner"){
-        navigate("/owner-dashboard")
-      }else{
-        navigate("/renter-dashboard")
+        navigate("/dashboard/owner")
+      }else if (formData.role === "House Renter") {
+        navigate("/dashboard/renter");
+      } else {
+        navigate("/");
       }
     } catch (error) {
       setLoading(false); // Stop the loading spinner
