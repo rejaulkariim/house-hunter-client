@@ -4,11 +4,13 @@ import Navbar from "../components/Navbar";
 
 function MainLayout() {
   return (
-    <>
+    <div>
       <Navbar />
-      <Outlet />
+      <div className="min-h-screen mt-16 py-10">
+        <Outlet />
+      </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

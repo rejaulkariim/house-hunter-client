@@ -24,9 +24,9 @@ function Navbar() {
           </div>
         </div>
         <div>
-          <button className="py-2 px-4 bg-accent text-dark font-semibold rounded-md">
+          <Link to="/login" className="py-2 px-4 bg-accent text-dark font-semibold rounded-md">
             Login
-          </button>
+          </Link>
         </div>
       </nav>
     </header>
