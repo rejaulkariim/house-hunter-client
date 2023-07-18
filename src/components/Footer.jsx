@@ -1,6 +1,10 @@
 function Footer() {
   return (
-    <div>Footer</div>
+    <div className="my-10 flex justify-center">
+    <p className="text-foreground">
+      &copy; {new Date().getFullYear()}, HouseHunter all rights reserved
+    </p>
+  </div>
   )
 }
 
