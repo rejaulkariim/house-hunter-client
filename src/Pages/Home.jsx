@@ -1,8 +1,8 @@
-import React from 'react'
+
 
 function Home() {
   return (
-    <div>Home</div>
+    <div className='min-h-screen mt-16'>Home</div>
   )
 }
 
