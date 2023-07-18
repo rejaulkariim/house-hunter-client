@@ -1,10 +1,11 @@
-import RegisterForm from "./components/RegisterForm";
+import { RouterProvider } from "react-router-dom";
+import router from "./Routes/Routes";
 
 function App() {
   return (
-    <div>
-      <RegisterForm />
-    </div>
+    <main>
+      <RouterProvider router={router}></RouterProvider>
+    </main>
   );
 }
 
