@@ -1,7 +1,9 @@
+import RegisterForm from "./components/RegisterForm";
+
 function App() {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <RegisterForm />
     </div>
   );
 }
