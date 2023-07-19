@@ -1,25 +1,8 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 const AddHouseForm = () => {
-  const [isFormDisabled, setIsFormDisabled] = useState(false);
-
-  useEffect(() => {
-    // Get the token from local storage
-    const token = localStorage.getItem("jwtToken");
-
-    if (token) {
-      // Decode the token to get the user details
-      const decodedToken = jwt_decode(token);
-      const { name, phone } = decodedToken;
-      console.log(first)
-
-      // Disable the form for logged-in users
-      setIsFormDisabled(true);
-    }
-  }, []);
 
 
   const handleHouseSubmit = async (e) => {
@@ -40,10 +23,12 @@ const AddHouseForm = () => {
 
     try {
       const token = localStorage.getItem("jwtToken");
+      console.log(token)
       const decodedToken = jwt_decode(token);
+      console.log(decodedToken)
 
       // Check if the user's role is "house owner"
-      if (decodedToken.role !== "house owner") {
+      if (decodedToken.role !== "House Owner") {
         toast.error("Only house owners can add a new house.");
         return;
       }
@@ -58,12 +43,12 @@ const AddHouseForm = () => {
       toast.success("House added successfully!");
     } catch (error) {
       console.log(error);
-      toast.error("Failed to add the house. Please try again.");
+      toast.error(error.message);
     }
   };
 
   return (
-    <form onSubmit={handleHouseSubmit} className="max-w-3xl mx-auto">
+    <form onSubmit={handleHouseSubmit} className="max-w-2xl mx-auto mt-16 py-10">
       <div className="mb-4">
         <h2>Add a new House</h2>
         <p>Please fill out the form to add a new house</p>
@@ -74,7 +59,6 @@ const AddHouseForm = () => {
           name="name"
           placeholder="Full Name"
           className="input input-bordered w-full"
-          defaultValue={defaultValues.name}
         />
         <div className="flex gap-4">
           <input
@@ -82,14 +66,12 @@ const AddHouseForm = () => {
             name="address"
             placeholder="Address"
             className="input input-bordered w-full"
-            defaultValue={defaultValues.address}
           />
           <input
             type="text"
             name="city"
             placeholder="City"
             className="input input-bordered w-full"
-            defaultValue={defaultValues.city}
           />
         </div>
 
@@ -99,14 +81,12 @@ const AddHouseForm = () => {
             name="availabilityDate"
             placeholder="Available Date"
             className="input input-bordered w-full"
-            defaultValue={defaultValues.availabilityDate}
           />
           <input
             type="number"
             name="phone"
             placeholder="Phone"
             className="input input-bordered w-full"
-            defaultValue={defaultValues.phone}
           />
         </div>
 
@@ -116,21 +96,18 @@ const AddHouseForm = () => {
             name="bedrooms"
             placeholder="Bedroom"
             className="input input-bordered w-full"
-            defaultValue={defaultValues.bedrooms}
           />
           <input
             type="number"
             name="roomSize"
             placeholder="Room Size"
             className="input input-bordered w-full"
-            defaultValue={defaultValues.roomSize}
           />
           <input
             type="text"
             name="rentPerMonth"
             placeholder="Rent per month"
             className="input input-bordered w-full"
-            defaultValue={defaultValues.rentPerMonth}
           />
         </div>
 
@@ -139,13 +116,11 @@ const AddHouseForm = () => {
           name="picture"
           placeholder="Image url"
           className="input input-bordered w-full"
-          defaultValue={defaultValues.picture}
         />
         <textarea
           className="textarea textarea-bordered h-32"
           name="description"
           placeholder="Description"
-          defaultValue={defaultValues.description}
         ></textarea>
         <input
           type="submit"

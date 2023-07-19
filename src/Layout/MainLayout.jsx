@@ -4,11 +4,9 @@ import Navbar from "../components/Navbar";
 
 function MainLayout() {
   return (
-    <div className="max-w-[1080px] mx-auto px-4 md:px-0">
+    <div>
       <Navbar />
-
       <Outlet />
-
       <Footer />
     </div>
   );
