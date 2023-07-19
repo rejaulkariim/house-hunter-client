@@ -7,7 +7,7 @@ import Home from "../Pages/Home";
 import LoginPage from "../Pages/Login";
 import OwnerDashboard from "../Pages/OwnerDashboard";
 import RegisterPage from "../Pages/Register";
-import RenterDashboard from "../Pages/RenterDashboard";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -37,16 +37,16 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "dashboard",
-    element: <DashboardLayout />,
+    path: "/",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
-        path: "/dashboard/owner",
-        element: <OwnerDashboard />,
-      },
-      {
-        path: "/dashboard/renter",
-        element: <RenterDashboard />,
+        path: "/dashboard",
+        element: <OwnerDashboard/>,
       },
     ],
   },

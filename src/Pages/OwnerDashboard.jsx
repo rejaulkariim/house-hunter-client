@@ -1,9 +1,7 @@
-import AddHouseForm from "../components/OwnerDashboard/AddHouseForm";
-
 const OwnerDashboard = () => {
   return (
-    <div className="mt-36">
-      <AddHouseForm />
+    <div className="min-h-screen mt-16 b-accent">
+      <h2>Welcome to owner dashboard</h2>
     </div>
   );
 };

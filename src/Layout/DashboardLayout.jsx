@@ -4,9 +4,11 @@ import Navbar from "../components/Navbar";
 
 const DashboardLayout = () => {
   return (
-    <div>
+    <div className="max-w-[1080px] mx-auto">
       <Navbar />
-      <Outlet />
+      <div>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

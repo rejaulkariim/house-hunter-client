@@ -30,7 +30,7 @@ function RegisterForm() {
 
       // redirect user to dashboard based on their role
       if(formData.role === "House Owner"){
-        navigate("/dashboard/owner")
+        navigate("/dashboard")
       }else if (formData.role === "House Renter") {
         navigate("/dashboard/renter");
       } else {
@@ -42,7 +42,7 @@ function RegisterForm() {
         // setErrorMessage("Email already registered. Please login");
         toast.error("Email already registered. Please login")
       } else {
-        console.log(error.message.data.response);
+        console.log(error.message.data);
         setErrorMessage("Registration failed. Please try again later.");
       }
     }
