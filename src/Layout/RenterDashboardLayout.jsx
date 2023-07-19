@@ -1,17 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
-const DashboardLayout = () => {
+const RenterDashboardLayout = () => {
   return (
     <div className="max-w-[1080px] mx-auto">
       <Navbar />
-      <div>
-        <Outlet />
-      </div>
+      <Outlet />
       <Footer />
     </div>
   );
 };
 
-export default DashboardLayout;
+export default RenterDashboardLayout;

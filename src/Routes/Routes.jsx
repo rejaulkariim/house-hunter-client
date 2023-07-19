@@ -1,11 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import DashboardLayout from "../Layout/DashboardLayout";
 import MainLayout from "../Layout/MainLayout";
+import OwnerDashboardLayout from "../Layout/OwnerDashboardLayout";
+import RenterDashboardLayout from "../Layout/RenterDashboardLayout";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
 import Home from "../Pages/Home";
+import HouseOwnerDashboard from "../Pages/HouseOwnerDashboard";
+import HouseRenterDashboard from "../Pages/HouseRenterDashboard";
 import LoginPage from "../Pages/Login";
-import OwnerDashboard from "../Pages/OwnerDashboard";
 import RegisterPage from "../Pages/Register";
 import PrivateRoute from "./PrivateRoute";
 
@@ -37,16 +39,31 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/",
+    path: "/owner",
     element: (
       <PrivateRoute>
-        <DashboardLayout />
+        <OwnerDashboardLayout />
       </PrivateRoute>
     ),
     children: [
       {
-        path: "/dashboard",
-        element: <OwnerDashboard/>,
+        path: "/owner/dashboard",
+        element: <HouseOwnerDashboard />,
+      },
+    ],
+  },
+  // Route for House Renter Dashboard
+  {
+    path: "/renter",
+    element: (
+      <PrivateRoute>
+        <RenterDashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "/renter/dashboard",
+        element: <HouseRenterDashboard />,
       },
     ],
   },

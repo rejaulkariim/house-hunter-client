@@ -1,4 +1,4 @@
-const OwnerDashboard = () => {
+const HouseOwnerDashboard = () => {
   return (
     <div className="min-h-screen mt-16 b-accent">
       <h2>Welcome to owner dashboard</h2>
@@ -6,4 +6,4 @@ const OwnerDashboard = () => {
   );
 };
 
-export default OwnerDashboard;
+export default HouseOwnerDashboard;

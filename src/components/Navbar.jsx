@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
@@ -21,6 +22,14 @@ function Navbar() {
   // Check if the authentication token exists in local storage
   const isAuthenticated = !!localStorage.getItem("jwtToken");
 
+  // Get the user's role from the JWT token if authenticated
+  let isHouseOwner = false;
+  if (isAuthenticated) {
+    const jwtToken = localStorage.getItem("jwtToken");
+    const decodedToken = jwt_decode(jwtToken);
+    isHouseOwner = decodedToken.role === "House Owner";
+  }
+
   return (
     <header className="fixed left-0 top-0 right-0 backdrop:blur h-16 z-50 bg-light border-b">
       <nav className="max-w-[1080px] mx-auto h-full flex justify-between items-center">
@@ -34,15 +43,21 @@ function Navbar() {
           <Link to="/" className="text-dark">
             Home
           </Link>
-          <Link to="/about" className="text-dark">
-            About
-          </Link>
           <Link to="/contact" className="text-dark">
             Contact
           </Link>
-          <Link to="/dashboard" className="text-dark">
-            Dashboard
+          <Link to="/about" className="text-dark">
+            About
           </Link>
+          {isHouseOwner ? ( // Show links based on the user's role
+            <Link to="/owner/dashboard" className="text-dark">
+              Dashboard
+            </Link>
+          ) : (
+            <Link to="/renter/dashboard" className="text-dark">
+              Dashboard
+            </Link>
+          )}
         </div>
 
         <div>
