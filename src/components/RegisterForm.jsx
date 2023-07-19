@@ -23,16 +23,16 @@ function RegisterForm() {
     e.preventDefault();
     try {
       setLoading(true); 
-      await axios.post("http://localhost:5000/api/register", formData);
+      await axios.post("https://house-hunter-server-vercel.app/api/register", formData);
       setLoading(false); 
       toast.success("Registration successful!");
       setFormData(initialState);
 
       // redirect user to dashboard based on their role
       if(formData.role === "House Owner"){
-        navigate("/dashboard")
+        navigate("/owner/dashboard")
       }else if (formData.role === "House Renter") {
-        navigate("/dashboard/renter");
+        navigate("/renter/dashboard");
       } else {
         navigate("/");
       }

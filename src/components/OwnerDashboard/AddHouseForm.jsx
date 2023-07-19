@@ -34,7 +34,7 @@ const AddHouseForm = () => {
       }
 
       // Submit the form and add a new house
-      await axios.post("http://localhost:5000/api/houses", formData, {
+      await axios.post("https://house-hunter-server-vercel.app/api/houses", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

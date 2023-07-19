@@ -20,7 +20,7 @@ function LoginForm() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/login",
+        "https://house-hunter-server-vercel.app/api/login",
         loginFormData
       );
       const token = response.data.token;
@@ -28,7 +28,7 @@ function LoginForm() {
       localStorage.setItem("jwtToken", token);
       toast.success("Login successful!");
       
-      navigate("/");
+      navigate("/owner/dashboard");
       form.reset();
     } catch (error) {
       console.log(error.response.data.message);

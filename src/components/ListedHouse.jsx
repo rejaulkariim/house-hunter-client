@@ -14,7 +14,7 @@ const ListedHouse = () => {
   const fetchHouses = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/api/houses");
+      const response = await axios.get("https://house-hunter-server-vercel.app/api/houses");
       setHouses(response.data);
       setLoading(false);
     } catch (error) {

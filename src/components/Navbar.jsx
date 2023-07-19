@@ -8,7 +8,7 @@ function Navbar() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/logout");
+      await axios.post("https://house-hunter-server-vercel.app/api/logout");
       localStorage.removeItem("jwtToken");
 
       toast.success("Logged out");
