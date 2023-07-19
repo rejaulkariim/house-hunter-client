@@ -22,9 +22,9 @@ function RegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true); // Start the loading spinner
+      setLoading(true); 
       await axios.post("http://localhost:5000/api/register", formData);
-      setLoading(false); // Stop the loading spinner
+      setLoading(false); 
       toast.success("Registration successful!");
       setFormData(initialState);
 
@@ -37,7 +37,7 @@ function RegisterForm() {
         navigate("/");
       }
     } catch (error) {
-      setLoading(false); // Stop the loading spinner
+      setLoading(false); 
       if (error.response?.status === 409) {
         // setErrorMessage("Email already registered. Please login");
         toast.error("Email already registered. Please login")

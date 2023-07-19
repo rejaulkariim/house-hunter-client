@@ -1,8 +1,10 @@
+import axios from "axios";
+import { toast } from "react-hot-toast";
+
 const AddHouseForm = () => {
-  const handleHouseSubmit = (e) => {
+  const handleHouseSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-
     const name = form.name.value;
     const address = form.address.value;
     const city = form.city.value;
@@ -27,6 +29,14 @@ const AddHouseForm = () => {
       description,
     };
     console.log(formData);
+
+    try {
+      await axios.post("http://localhost:5000/api/houses", formData);
+      toast.success("House added successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to add the house. Please try again.");
+    }
   };
 
   return (

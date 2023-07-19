@@ -1,43 +1,39 @@
 import axios from "axios";
-import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginForm() {
-  const initialState = {
-    email: "",
-    password: "",
-  };
-
-  const [formData, setFormData] = useState(initialState);
-  console.log(formData)
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const loginFormData = {
+      email,
+      password,
+    };
+
+    console.log(loginFormData);
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/login",
-        formData
+        loginFormData
       );
       const token = response.data.token;
       // Store the JWT token in local storage
       localStorage.setItem("jwtToken", token);
-
       toast.success("Login successful!");
-      // Clear the form data
-      setFormData(initialState);
+      
+      navigate("/");
+      form.reset();
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);
     }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
   };
 
   return (
@@ -50,23 +46,24 @@ function LoginForm() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
           <input
             type="email"
+            name="email"
             placeholder="Email"
             className="py-2 px-4 rounded-md"
             required
-    
-            onChange={handleInputChange}
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
             className="py-2 px-4 rounded-md"
             required
-        
-            onChange={handleInputChange}
           />
-          <button type="submit" className="py-2 px-4 bg-accent rounded-md">
-            Login
-          </button>
+          <input
+            type="submit"
+            value="Login"
+            className="py-2 px-4 bg-accent rounded-md cursor-pointer"
+            required
+          />
           <p className="text-center">
             {" "}
             Don&apos;t have an account ?{" "}
