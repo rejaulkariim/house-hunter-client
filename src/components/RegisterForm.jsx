@@ -39,7 +39,8 @@ function RegisterForm() {
     } catch (error) {
       setLoading(false); // Stop the loading spinner
       if (error.response?.status === 409) {
-        setErrorMessage("Email already registered. Please login");
+        // setErrorMessage("Email already registered. Please login");
+        toast.error("Email already registered. Please login")
       } else {
         console.log(error.message.data.response);
         setErrorMessage("Registration failed. Please try again later.");
@@ -62,7 +63,7 @@ function RegisterForm() {
           <h1 className="text-xl font-bold ">Register an account</h1>
           <p>Please fill out the form to create an account</p>
         </div>
-        {errorMessage && <p className="text-center text-error">{errorMessage}</p>}
+        {/* {errorMessage && <p className="text-center text-error">{errorMessage}</p>} */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
           <input
             type="text"
