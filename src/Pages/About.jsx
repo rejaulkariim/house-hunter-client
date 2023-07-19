@@ -1,5 +1,9 @@
 function About() {
-  return <div>About</div>;
+  return (
+    <div className="min-h-screen text-center">
+      <p className="mt-16">Coming Soon!!!</p>
+    </div>
+  );
 }
 
 export default About;

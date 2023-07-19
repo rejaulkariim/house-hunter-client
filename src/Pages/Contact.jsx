@@ -1,8 +1,9 @@
-
 function Contact() {
   return (
-    <div>Contact</div>
-  )
+    <div className="min-h-screen text-center">
+      <p className="mt-16">Coming Soon!!!</p>
+    </div>
+  );
 }
 
-export default Contact
+export default Contact;

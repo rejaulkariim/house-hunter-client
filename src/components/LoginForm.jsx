@@ -48,26 +48,26 @@ function LoginForm() {
             type="email"
             name="email"
             placeholder="Email"
-            className="py-2 px-4 rounded-md"
+            className="input input-bordered w-full"
             required
           />
           <input
             type="password"
             name="password"
             placeholder="Password"
-            className="py-2 px-4 rounded-md"
+            className="input input-bordered w-full"
             required
           />
           <input
             type="submit"
             value="Login"
-            className="py-2 px-4 bg-accent rounded-md cursor-pointer"
+            className="py-2 px-4 bg-accent text-dark rounded-md cursor-pointer"
             required
           />
           <p className="text-center">
             {" "}
             Don&apos;t have an account ?{" "}
-            <span>
+            <span className="text-accent font-semi-bold">
               <Link to="/register">Register</Link>
             </span>
           </p>

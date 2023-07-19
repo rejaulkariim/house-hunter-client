@@ -71,14 +71,14 @@ function RegisterForm() {
             placeholder="Full Name"
             value={formData.fullName}
             onChange={handleInputChange}
-            className="py-2 px-4 rounded-md"
+            className="input input-bordered w-full"
             required
           />
           <select
             name="role"
             value={formData.role}
             onChange={handleInputChange}
-            className="py-2 px-4 rounded-md"
+            className="input input-bordered w-full"
             required
           >
             {" "}
@@ -95,7 +95,7 @@ function RegisterForm() {
             placeholder="Phone Number"
             value={formData.phoneNumber}
             onChange={handleInputChange}
-            className="py-2 px-4 rounded-md"
+            className="input input-bordered w-full"
             required
           />
           <input
@@ -104,7 +104,7 @@ function RegisterForm() {
             placeholder="Email"
             value={formData.email}
             onChange={handleInputChange}
-            className="py-2 px-4 rounded-md"
+            className="input input-bordered w-full"
             required
           />
           <input
@@ -113,19 +113,19 @@ function RegisterForm() {
             placeholder="Password"
             value={formData.password}
             onChange={handleInputChange}
-            className="py-2 px-4 rounded-md"
+            className="input input-bordered w-full"
             required
           />
           <button
             type="submit"
-            className="py-2 px-4 bg-primary rounded-md"
+            className="py-2 px-4 bg-accent text-dark rounded-md cursor-pointer"
           >
             {loading ? <FaSpinner className="animate-spin" /> : "Register"} 
           </button>
           <p className="text-center">
             {" "}
             Already have an account ?{" "}
-            <span>
+            <span className="text-accent font-semi-bold">
               <Link to="/login">Login</Link>
             </span>
           </p>
