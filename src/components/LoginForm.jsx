@@ -1,11 +1,16 @@
 import axios from "axios";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     const form = e.target;
     const email = form.email.value;
@@ -19,27 +24,32 @@ function LoginForm() {
     console.log(loginFormData);
 
     try {
-     const response = await axios.post(
-        `http://localhost:5000/api/user/auth/login`,
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/user/auth/login`,
         loginFormData
-      )
+      );
+
+      toast.success("Login successful!");
+      form.reset();
 
       const token = response.data.token;
-
-      // Store the JWT token in local storage for future authentication
       localStorage.setItem("jwtToken", token);
 
-      // Display a success toast message
-      toast.success("Login successful!");
+      // Extract the role from the response data
+      const role = response.data.user.role;
 
-      // Redirect the user to the dashboard page
-      navigate("/owner/dashboard");
-
-      // Reset the form fields after successful login
-    
+      if (role === "house owner") {
+        navigate("/owner/dashboard");
+      } else if (role === "house renter") {
+        navigate("/renter/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(error);
       toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
 

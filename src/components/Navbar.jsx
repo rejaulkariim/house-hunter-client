@@ -6,12 +6,14 @@ import Button from "./Button";
 
 function Navbar() {
   const navigate = useNavigate();
+
+
   const handleLogout = async () => {
     try {
-      await axios.post("https://house-hunter-server-vercel.app/api/logout");
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/user/auth/logout`);
       localStorage.removeItem("jwtToken");
 
-      toast.success("Logged out");
+      toast.success("Logged out successful");
       navigate("/login");
     } catch (error) {
       console.log("Error logging out:", error);

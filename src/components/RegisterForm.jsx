@@ -40,7 +40,6 @@ function RegisterForm() {
       const token = response.data.token;
       localStorage.setItem("jwtToken", token);
 
-      navigate("/dashboard");
 
       if (role === "house owner") {
         navigate("/owner/dashboard");
