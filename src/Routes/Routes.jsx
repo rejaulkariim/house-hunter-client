@@ -51,11 +51,15 @@ const router = createBrowserRouter([
         path: "/owner/dashboard",
         element: <HouseOwnerDashboard />,
       },
+      {
+        path: "/owner/dashboard/add-house",
+        element: <AddHouseForm />,
+      },
     ],
   },
   // Route for House Renter Dashboard
   {
-    path: "/renter",
+    path: "/",
     element: (
       <PrivateRoute>
         <RenterDashboardLayout />
@@ -66,10 +70,7 @@ const router = createBrowserRouter([
         path: "/renter/dashboard",
         element: <HouseRenterDashboard />,
       },
-      {
-        path: "/renter/dashboard/add-house",
-        element: <AddHouseForm />,
-      },
+     
     ],
   },
 ]);

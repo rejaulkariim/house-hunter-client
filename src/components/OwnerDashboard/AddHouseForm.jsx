@@ -15,40 +15,51 @@ const AddHouseForm = () => {
       availabilityDate: form.availabilityDate.value,
       phone: form.phone.value,
       bedrooms: form.bedrooms.value,
+      bathrooms: form.bathrooms.value,
       roomSize: form.roomSize.value,
       rentPerMonth: form.rentPerMonth.value,
       picture: form.picture.value,
       description: form.description.value,
     };
-
+    console.log(formData);
     try {
       const token = localStorage.getItem("jwtToken");
-      console.log(token)
+      console.log(token);
       const decodedToken = jwt_decode(token);
-      console.log(decodedToken)
+      formData.owner = decodedToken.userId;
+
+
+      console.log(decodedToken);
 
       // Check if the user's role is "house owner"
-      if (decodedToken.role !== "House Owner") {
+      if (decodedToken.role !== "house owner") {
         toast.error("Only house owners can add a new house.");
         return;
       }
 
       // Submit the form and add a new house
-      await axios.post("https://house-hunter-server-vercel.app/api/houses", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/user/add/houses`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+        );
+        toast.success("House added successfully!");
 
-      toast.success("House added successfully!");
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
   };
 
   return (
-    <form onSubmit={handleHouseSubmit} className="max-w-2xl mx-auto mt-16 py-10">
+    <form
+      onSubmit={handleHouseSubmit}
+      className="max-w-2xl mx-auto mt-16 py-10"
+    >
       <div className="mb-4">
         <h2>Add a new House</h2>
         <p>Please fill out the form to add a new house</p>
@@ -83,7 +94,7 @@ const AddHouseForm = () => {
             className="input input-bordered w-full"
           />
           <input
-            type="number"
+            type="text"
             name="phone"
             placeholder="Phone"
             className="input input-bordered w-full"
@@ -92,13 +103,19 @@ const AddHouseForm = () => {
 
         <div className="flex gap-4">
           <input
-            type="number"
+            type="text"
             name="bedrooms"
             placeholder="Bedroom"
             className="input input-bordered w-full"
           />
           <input
-            type="number"
+            type="text"
+            name="bathrooms"
+            placeholder="Bedroom"
+            className="input input-bordered w-full"
+          />
+          <input
+            type="text"
             name="roomSize"
             placeholder="Room Size"
             className="input input-bordered w-full"

@@ -2,6 +2,8 @@ import jwt_decode from "jwt-decode";
 import { Navigate, useLocation } from "react-router";
 import OwnerDashboardLayout from "../Layout/OwnerDashboardLayout";
 import RenterDashboardLayout from "../Layout/RenterDashboardLayout";
+
+
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
@@ -13,7 +15,7 @@ const PrivateRoute = ({ children }) => {
   if (isAuthenticated) {
     const jwtToken = localStorage.getItem("jwtToken");
     const decodedToken = jwt_decode(jwtToken);
-    isHouseOwner = decodedToken.role === "House Owner";
+    isHouseOwner = decodedToken.role === "house owner";
   }
 
   if (!isAuthenticated) {

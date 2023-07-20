@@ -4,9 +4,12 @@ import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
 function LoginForm() {
-  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +31,8 @@ function LoginForm() {
         `${import.meta.env.VITE_API_BASE_URL}/api/user/auth/login`,
         loginFormData
       );
-
+      const user = response.data.user;
+      setUser(user);
       toast.success("Login successful!");
       form.reset();
 
