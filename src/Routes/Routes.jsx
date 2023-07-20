@@ -11,6 +11,7 @@ import LoginPage from "../Pages/Login";
 import RegisterPage from "../Pages/Register";
 import AddHouseForm from "../components/OwnerDashboard/AddHouseForm";
 import PrivateRoute from "./PrivateRoute";
+import RenterPrivateRoute from "./RenterPrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -61,16 +62,15 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <PrivateRoute>
+      <RenterPrivateRoute>
         <RenterDashboardLayout />
-      </PrivateRoute>
+      </RenterPrivateRoute>
     ),
     children: [
       {
         path: "/renter/dashboard",
         element: <HouseRenterDashboard />,
       },
-     
     ],
   },
 ]);

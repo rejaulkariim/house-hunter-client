@@ -1,7 +1,7 @@
 import jwt_decode from "jwt-decode";
 import { Navigate, useLocation } from "react-router";
 
-const PrivateRoute = ({ children }) => {
+const RenterPrivateRoute = ({ children }) => {
   const location = useLocation();
   const token = localStorage.getItem("jwtToken");
 
@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
   const isValidToken = (token) => {
     try {
       const decodedToken = jwt_decode(token);
-      return decodedToken.role === "house owner";
+      return decodedToken.role === "house renter";
     } catch (error) {
       console.log("Error decoding token", error);
       return false;
@@ -21,8 +21,8 @@ const PrivateRoute = ({ children }) => {
   return isAuthenticated ? (
     children
   ) : (
-    <Navigate to="/" state={{ from: location }} replace />
+    <Navigate to="/login" state={{ from: location }} replace />
   );
 };
 
-export default PrivateRoute;
+export default RenterPrivateRoute;

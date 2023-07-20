@@ -29,7 +29,7 @@ function Navbar() {
   if (isAuthenticated) {
     const jwtToken = localStorage.getItem("jwtToken");
     const decodedToken = jwt_decode(jwtToken);
-    isHouseOwner = decodedToken.role === "House Owner";
+    isHouseOwner = decodedToken.role === "house owner";
   }
 
   return (
@@ -132,7 +132,7 @@ function Navbar() {
         {isAuthenticated ? (
           <button
             onClick={handleLogout}
-            className="bg-accent text-light hove:bg-accent/90 py-2 px-4 rounded-md duration-300 cursor-pointer"
+            className="bg-accent text-dark hove:bg-accent/90 py-2 px-4 rounded-md duration-300 cursor-pointer"
           >
             Logout
           </button>

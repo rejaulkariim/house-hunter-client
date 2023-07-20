@@ -14,7 +14,7 @@ const ListedHouse = () => {
   const fetchHouses = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("https://house-hunter-server-vercel.app/api/houses");
+      const response = await axios.get( `${import.meta.env.VITE_API_BASE_URL}/api/user/get/houses`);
       setHouses(response.data);
       setLoading(false);
     } catch (error) {
@@ -29,7 +29,8 @@ const ListedHouse = () => {
 
   // Filter houses based on the search term
   const filteredHouses = houses.filter((house) =>
-    house.name.toLowerCase().includes(searchTerm.toLowerCase())
+  house.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  house.address.toLowerCase().includes(searchTerm.toLowerCase())    
   );
 
   if (loading) {
@@ -43,11 +44,12 @@ const ListedHouse = () => {
   return (
     <div className="">
       <div className="flex justify-center">
-        <div className="flex mb-4">
+        {/* search bar */}
+        <div className="flex mb-4 w-[30rem]">
           <input
             type="text"
-            placeholder="Search by house name"
-            className="input input-bordered max-w-xl"
+            placeholder="Search by house name or address"
+            className="input input-bordered w-full"
             value={searchTerm}
             onChange={handleSearch}
           />

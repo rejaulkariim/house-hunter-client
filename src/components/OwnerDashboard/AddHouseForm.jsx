@@ -1,10 +1,13 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Button from "../Button";
 
 const AddHouseForm = () => {
 
-
+  const navigate = useNavigate()
+  
   const handleHouseSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -28,7 +31,6 @@ const AddHouseForm = () => {
       const decodedToken = jwt_decode(token);
       formData.owner = decodedToken.userId;
 
-
       console.log(decodedToken);
 
       // Check if the user's role is "house owner"
@@ -46,9 +48,10 @@ const AddHouseForm = () => {
             Authorization: `Bearer ${token}`,
           },
         }
-        );
-        toast.success("House added successfully!");
-
+      );
+      form.reset()
+      navigate("/owner/dashboard")
+      toast.success("House added successfully!");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -56,96 +59,108 @@ const AddHouseForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleHouseSubmit}
-      className="max-w-2xl mx-auto mt-16 py-10"
-    >
+    <div className="mt-16 min-h-screen max-w-2xl mx-auto">
       <div className="mb-4">
-        <h2>Add a new House</h2>
-        <p>Please fill out the form to add a new house</p>
+        <Button placeholder="Back to dashboard?" href="/owner/dashboard" />
       </div>
-      <div className="flex flex-col gap-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          className="input input-bordered w-full"
-        />
-        <div className="flex gap-4">
+      <form onSubmit={handleHouseSubmit} className="max-w-2xl mx-auto py-10">
+        <div className="mb-4">
+          <h2 className="text-xl font-bold">Add a new House</h2>
+          <p>Please fill out the form to add a new house</p>
+        </div>
+        <div className="flex flex-col gap-4">
           <input
             type="text"
-            name="address"
-            placeholder="Address"
+            name="name"
+            placeholder="Full Name"
             className="input input-bordered w-full"
+            required
           />
+          <div className="flex gap-4">
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              className="input input-bordered w-full"
+              required
+            />
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <input
+              type="date"
+              name="availabilityDate"
+              placeholder="Available Date"
+              className="input input-bordered w-full"
+              required
+            />
+            <input
+              type="text"
+              name="phone"
+              placeholder="Phone"
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+
+          <div className="flex gap-4">
+            <input
+              type="text"
+              name="bedrooms"
+              placeholder="Bedroom"
+              className="input input-bordered w-full"
+              required
+            />
+            <input
+              type="text"
+              name="bathrooms"
+              placeholder="Bedroom"
+              className="input input-bordered w-full"
+              required
+            />
+            <input
+              type="text"
+              name="roomSize"
+              placeholder="Room Size"
+              className="input input-bordered w-full"
+              required
+            />
+            <input
+              type="text"
+              name="rentPerMonth"
+              placeholder="Rent per month"
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+
           <input
             type="text"
-            name="city"
-            placeholder="City"
+            name="picture"
+            placeholder="Image url"
             className="input input-bordered w-full"
+            required
+          />
+          <textarea
+            className="textarea textarea-bordered h-32"
+            name="description"
+            placeholder="Description"
+          ></textarea>
+          <input
+            type="submit"
+            value="Submit House"
+            className="py-2 px-4 rounded-md duration-300 cursor-pointer bg-accent text-dark hove:bg-accent/90 w-full"
           />
         </div>
-
-        <div className="flex gap-4">
-          <input
-            type="date"
-            name="availabilityDate"
-            placeholder="Available Date"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            name="phone"
-            placeholder="Phone"
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <input
-            type="text"
-            name="bedrooms"
-            placeholder="Bedroom"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            name="bathrooms"
-            placeholder="Bedroom"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            name="roomSize"
-            placeholder="Room Size"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            name="rentPerMonth"
-            placeholder="Rent per month"
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        <input
-          type="text"
-          name="picture"
-          placeholder="Image url"
-          className="input input-bordered w-full"
-        />
-        <textarea
-          className="textarea textarea-bordered h-32"
-          name="description"
-          placeholder="Description"
-        ></textarea>
-        <input
-          type="submit"
-          value="Submit House"
-          className="btn btn-primary w-full"
-        />
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

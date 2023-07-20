@@ -1,24 +1,63 @@
-import { Link } from "react-router-dom";
+// OwnerDashboard.js
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Button from "../components/Button";
+
 
 const HouseOwnerDashboard = () => {
-  const token = localStorage.getItem("jwtToken")
+  const [houses, setHouses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  console.log(houses);
+
+  useEffect(() => {
+    // Fetch the houses listed by the logged-in user
+    const fetchHouses = async () => {
+      try {
+        const token = localStorage.getItem("jwtToken");
+        // const decodedToken = jwtDecode(token)
+        // console.log(decodedToken.userId)
+
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/user/houses`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setHouses(response.data);
+        console.log(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchHouses();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="min-h-screen mt-16 b-accent">
-      <div className="py-10">
-        <h2 className="text-5xl font-bold text-accent">
-          Welcome to owner dashboard
-        </h2>
+    <div className="min-h-screen mt-16">
+      <h1 className="text-2xl text-accent text-center font-bold">Welcome to House Owner Dashboard</h1>
+      <Button placeholder="Add a New House" href="/owner/dashboard/add-house"/>
 
-        <div className="my-4">
-          <Link
-            to="/owner/dashboard/add-house"
-            className="py-2 px-4 rounded-md duration-300 cursor-pointer bg-accent text-light hove:bg-accent/90"
-          >
-            Add New House
-          </Link>
+  
+      <h2>Total Houses Listed:</h2>
+      {houses.map((house) => (
+        <div key={house._id}>
+          <h3>{house.name}</h3>
+
+          {/* Add more details here as needed */}
         </div>
-      </div>
+      ))}
+
+   
     </div>
   );
 };
