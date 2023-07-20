@@ -1,59 +1,60 @@
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { FaSpinner } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 function RegisterForm() {
-  const initialState = {
-    fullName: "",
-    role: "",
-    phoneNumber: "",
-    email: "",
-    password: "",
-  };
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState(initialState);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true); 
-      await axios.post("https://house-hunter-server-vercel.app/api/register", formData);
-      setLoading(false); 
-      toast.success("Registration successful!");
-      setFormData(initialState);
+    setLoading(true);
 
-      // redirect user to dashboard based on their role
-      if(formData.role === "House Owner"){
-        navigate("/owner/dashboard")
-      }else if (formData.role === "House Renter") {
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+    const password = form.password.value;
+    const role = form.role.value;
+
+    const formData = {
+      name,
+      email,
+      phone,
+      password,
+      role,
+    };
+    console.log(formData);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/user/auth/register`,
+        formData
+      );
+      console.log("Registration successful!");
+      toast.success("Registration successful!");
+      form.reset();
+
+      const token = response.data.token;
+      localStorage.setItem("jwtToken", token);
+
+      navigate("/dashboard");
+
+      if (role === "house owner") {
+        navigate("/owner/dashboard");
+      } else if (role === "house renter") {
         navigate("/renter/dashboard");
       } else {
-        navigate("/");
+       navigate("/");
       }
     } catch (error) {
-      setLoading(false); 
-      if (error.response?.status === 409) {
-        // setErrorMessage("Email already registered. Please login");
-        toast.error("Email already registered. Please login")
-      } else {
-        console.log(error.message.data);
-        setErrorMessage("Registration failed. Please try again later.");
-      }
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message)
+    } finally {
+      setLoading(false);
     }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
   };
 
   return (
@@ -63,67 +64,46 @@ function RegisterForm() {
           <h1 className="text-xl font-bold ">Register an account</h1>
           <p>Please fill out the form to create an account</p>
         </div>
-        {/* {errorMessage && <p className="text-center text-error">{errorMessage}</p>} */}
+
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
           <input
             type="text"
-            name="fullName"
+            name="name"
             placeholder="Full Name"
-            value={formData.fullName}
-            onChange={handleInputChange}
             className="input input-bordered w-full"
-            required
           />
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleInputChange}
-            className="input input-bordered w-full"
-            required
-          >
-            {" "}
+          <select name="role" className="input input-bordered w-full">
             <option value="" disabled selected>
               Select Role
             </option>
-            <option value="House Owner">House Owner</option>
-            <option value="House Renter">House Renter</option>
+            <option value="house owner">house owner</option>
+            <option value="house renter">house renter</option>
           </select>
 
           <input
             type="tel"
-            name="phoneNumber"
+            name="phone"
             placeholder="Phone Number"
-            value={formData.phoneNumber}
-            onChange={handleInputChange}
             className="input input-bordered w-full"
-            required
           />
           <input
             type="email"
             name="email"
             placeholder="Email"
-            value={formData.email}
-            onChange={handleInputChange}
             className="input input-bordered w-full"
-            required
           />
           <input
             type="password"
             name="password"
             placeholder="Password"
-            value={formData.password}
-            onChange={handleInputChange}
             className="input input-bordered w-full"
-            required
           />
-          <button
+          <input
             type="submit"
+            value="Register"
             className="py-2 px-4 bg-accent text-dark rounded-md cursor-pointer"
-          >
-            {loading ? <FaSpinner className="animate-spin" /> : "Register"} 
-          </button>
+          ></input>
           <p className="text-center">
-            {" "}
             Already have an account ?{" "}
             <span className="text-accent font-semi-bold">
               <Link to="/login">Login</Link>

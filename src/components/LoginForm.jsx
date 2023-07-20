@@ -19,17 +19,24 @@ function LoginForm() {
     console.log(loginFormData);
 
     try {
-      const response = await axios.post(
-        "https://house-hunter-server-vercel.app/api/login",
+     const response = await axios.post(
+        `http://localhost:5000/api/user/auth/login`,
         loginFormData
-      );
+      )
+
       const token = response.data.token;
-      // Store the JWT token in local storage
+
+      // Store the JWT token in local storage for future authentication
       localStorage.setItem("jwtToken", token);
+
+      // Display a success toast message
       toast.success("Login successful!");
-      
+
+      // Redirect the user to the dashboard page
       navigate("/owner/dashboard");
-      form.reset();
+
+      // Reset the form fields after successful login
+    
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);
