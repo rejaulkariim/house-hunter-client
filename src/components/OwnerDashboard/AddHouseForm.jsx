@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 
 const AddHouseForm = () => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-  
   const handleHouseSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -49,8 +48,8 @@ const AddHouseForm = () => {
           },
         }
       );
-      form.reset()
-      navigate("/owner/dashboard")
+      form.reset();
+      navigate("/owner/dashboard");
       toast.success("House added successfully!");
     } catch (error) {
       console.log(error);
@@ -65,17 +64,24 @@ const AddHouseForm = () => {
       </div>
       <form onSubmit={handleHouseSubmit} className="max-w-2xl mx-auto py-10">
         <div className="mb-4">
-          <h2 className="text-xl font-bold">Add a new House</h2>
+          <h2 className="text-2xl font-bold">Add a new House</h2>
           <p>Please fill out the form to add a new house</p>
         </div>
-        <div className="flex flex-col gap-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            className="input input-bordered w-full"
-            required
-          />
+        <div className="flex flex-col gap-3">
+          <div>
+            <label className="label">
+              <span className="label-text text-sm">Give your house a name</span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Give your house a name"
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+
+          
           <div className="flex gap-4">
             <input
               type="text"
@@ -104,7 +110,7 @@ const AddHouseForm = () => {
             <input
               type="text"
               name="phone"
-              placeholder="Phone"
+              placeholder="+880 is required"
               className="input input-bordered w-full"
               required
             />
@@ -121,7 +127,7 @@ const AddHouseForm = () => {
             <input
               type="text"
               name="bathrooms"
-              placeholder="Bedroom"
+              placeholder="Bathrooms"
               className="input input-bordered w-full"
               required
             />

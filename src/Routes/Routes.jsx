@@ -9,6 +9,7 @@ import HouseOwnerDashboard from "../Pages/HouseOwnerDashboard";
 import HouseRenterDashboard from "../Pages/HouseRenterDashboard";
 import LoginPage from "../Pages/Login";
 import RegisterPage from "../Pages/Register";
+import EditHouseForm from "../components/EditHouseForm";
 import AddHouseForm from "../components/OwnerDashboard/AddHouseForm";
 import PrivateRoute from "./PrivateRoute";
 import RenterPrivateRoute from "./RenterPrivateRoute";
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/owner/dashboard/add-house",
         element: <AddHouseForm />,
+      },
+      {
+        path: "/owner/dashboard/edit-house/:id",
+        element: <EditHouseForm/>,
       },
     ],
   },
