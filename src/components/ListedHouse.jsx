@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import BookingModal from "./BookingModal";
 import HouseCard from "./HouseCard";
 
@@ -7,9 +8,10 @@ const ListedHouse = () => {
   const [houses, setHouses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
 
   const [selectedHouse, setSelectedHouse] = useState(null);
-  console.log(selectedHouse);
+
   useEffect(() => {
     const fetchHouses = async () => {
       try {
@@ -25,7 +27,7 @@ const ListedHouse = () => {
       }
     };
     fetchHouses();
-  }, []);
+  }, [page]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -66,16 +68,34 @@ const ListedHouse = () => {
           properties
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
-        {filteredHouses.map((house) => (
-          <HouseCard
-            key={house._id}
-            house={house}
-            setSelectedHouse={setSelectedHouse}
-          />
-        ))}
-      </div>
-      {selectedHouse ? <BookingModal selectedHouse={selectedHouse} setSelectedHouse={setSelectedHouse} /> : null}
+      <InfiniteScroll
+        dataLength={houses.length}
+        next={() => setPage((prevPage) => prevPage + 1)}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p className="text-center my-10">
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+    
+    
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
+          {filteredHouses.map((house) => (
+            <HouseCard
+              key={house._id}
+              house={house}
+              setSelectedHouse={setSelectedHouse}
+            />
+          ))}
+        </div>
+      </InfiniteScroll>
+      {selectedHouse ? (
+        <BookingModal
+          selectedHouse={selectedHouse}
+          setSelectedHouse={setSelectedHouse}
+        />
+      ) : null}
     </div>
   );
 };
