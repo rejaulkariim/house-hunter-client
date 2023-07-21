@@ -2,7 +2,8 @@ import jwtDecode from "jwt-decode";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
-  const { name, address } = selectedHouse;
+  const { name, address, phone } = selectedHouse;
+  console.log(selectedHouse)
 
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
       user: decodedToken.name,
       address: address,
       house: selectedHouse,
+      phone: phone
     };
 
     const existingBookings = JSON.parse(localStorage.getItem("bookings")) || [];
@@ -31,7 +33,7 @@ const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
   };
 
   return (
-    <dialog id="my_modal_3" className="modal">
+    <dialog id="bookingModal" className="modal">
       <form method="dialog" className="modal-box">
         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
           ✕
@@ -50,7 +52,14 @@ const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
             type="text"
             placeholder="address"
             className="input input-bordered w-full"
-            defaultValue={address}
+            defaultValue={decodedToken.email}
+            disabled
+          />
+          <input
+            type="text"
+            placeholder="address"
+            className="input input-bordered w-full"
+            defaultValue={phone}
             disabled
           />
 

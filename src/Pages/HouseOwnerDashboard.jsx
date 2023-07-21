@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import DeleteHouseModal from "../components/DeleteHouseModal";
@@ -7,6 +8,12 @@ const HouseOwnerDashboard = () => {
   const [houses, setHouses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedHouseId, setSelectedHouseId] = useState(null);
+
+
+  const token = localStorage.getItem("jwtToken");
+  const decodedToken = jwtDecode(token);
+  console.log(decodedToken);
+
 
   useEffect(() => {
     const fetchHouses = async () => {
@@ -61,8 +68,10 @@ const HouseOwnerDashboard = () => {
   return (
     <div className="mt-16 min-h-screen max-w-6xl mx-auto">
       <h2 className="text-2xl text-accent text-center font-bold">
-        Welcome to owner dashboard
+        Welcome back, {decodedToken.name}
       </h2>
+      <p className="text-center text-accent">{decodedToken.email}</p>
+      <p className="text-center text-accent">Your role is a {decodedToken.role}</p>
       <div className="flex justify-center my-10">
         <Button
           placeholder="Add a New House"

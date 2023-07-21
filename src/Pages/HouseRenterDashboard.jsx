@@ -1,11 +1,19 @@
+import jwtDecode from "jwt-decode";
+
 const HouseRenterDashboard = () => {
   const bookings = JSON.parse(localStorage.getItem("bookings"));
+
+  const token = localStorage.getItem("jwtToken");
+  const decodedToken = jwtDecode(token);
+  console.log(decodedToken);
 
   return (
     <div className="min-h-screen mt-16">
       <h2 className="text-2xl text-accent text-center font-bold">
-        Welcome to renter dashboard
+        Welcome back, {decodedToken.name}
       </h2>
+      <p className="text-center text-accent">{decodedToken.email}</p>
+      <p className="text-center text-accent">Your role is a {decodedToken.role}</p>
 
       <div className="mt-4">
         {bookings && bookings.length > 0 ? (

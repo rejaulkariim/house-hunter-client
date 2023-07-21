@@ -2,12 +2,28 @@ import { useNavigate } from "react-router-dom";
 
 const HouseCard = ({ house, setSelectedHouse }) => {
 
+  
   const navigate = useNavigate();
-
   const token = localStorage.getItem("jwtToken");
-  if (!token) {
-    navigate("/login");
-  }
+  
+
+  const handleBookNowClick = () => {
+    if (token) {
+      setSelectedHouse(house);
+      setTimeout(() => {
+        if (
+          window.bookingModal &&
+          typeof window.bookingModal.showModal === "function"
+        ) {
+          window.bookingModal.showModal();
+        }
+      }, 0);
+    } else {
+      navigate("/login");
+    }
+  };
+
+ 
 
   return (
     <div className="shadow-md rounded-md p-4">
@@ -43,14 +59,7 @@ const HouseCard = ({ house, setSelectedHouse }) => {
           </p>
         </div>
         <button
-         onClick={() => {
-          setSelectedHouse(house);
-          setTimeout(() => {
-            if (window.my_modal_3 && typeof window.my_modal_3.showModal === "function") {
-              window.my_modal_3.showModal();
-            }
-          }, 0);
-        }}
+         onClick={handleBookNowClick}
           className="mt-4 w-full btn btn-accent"
         >
           Book Now
