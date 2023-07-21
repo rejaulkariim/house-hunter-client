@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import BookingCard from "./BookingCard";
+import Button from "./Button";
 
 const UserBookings = () => {
   const [bookings, setBookings] = useState([]);
-
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -31,7 +31,14 @@ const UserBookings = () => {
   return (
     <div className="mt-10">
       {bookings.length === 0 ? (
-        <p>No bookings found.</p>
+        <div>
+          <p className="text-xl font-medium tracking-wide text-center">
+            You have no booking available right now
+          </p>
+          <div className="flex justify-center my-4">
+            <Button placeholder="Start Booking Now" href="/" />
+          </div>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {bookings.map((booking) => (

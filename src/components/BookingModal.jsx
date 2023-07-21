@@ -33,6 +33,26 @@ const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
         house: selectedHouse,
         phone: phone,
       };
+      // Make an API call to your backend to fetch existing bookings for the user
+      const responsed = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/user/bookings`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const userBookings = responsed.data.userBookings || [];
+      const totalBookings = userBookings.length;
+
+      // Check if the user has already booked 2 houses
+      if (totalBookings >= 2) {
+        toast.error(
+          "You can only book 2 houses please free up booking space to book again"
+        );
+        return;
+      }
 
       // Make an API call to your backend to save the booking order
       const response = await axios.post(
