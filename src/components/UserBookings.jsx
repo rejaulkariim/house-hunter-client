@@ -5,7 +5,6 @@ import BookingCard from "./BookingCard";
 const UserBookings = () => {
   const [bookings, setBookings] = useState([]);
 
-  console.log(bookings);
 
   useEffect(() => {
     const fetchOrders = async () => {

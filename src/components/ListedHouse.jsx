@@ -50,20 +50,21 @@ const ListedHouse = () => {
 
   return (
     <div className="">
+      <h2 className="text-center text-2xl font-bold tracking-wider my-4">Search Your Desire House</h2>
       <div className="flex justify-center">
         {/* search bar */}
-        <div className="flex mb-4 w-[30rem]">
+        <div className="flex mb-4 w-[30rem] shadow-md rounded-lg">
           <input
             type="text"
             placeholder="Search by house name or address"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full  tracking-wider text-sm "
             value={searchTerm}
             onChange={handleSearch}
           />
         </div>
       </div>
       <div className="flex justify-center mt-10">
-        <p>
+        <p className="text-medium tracking-wider">
           Explore and book your dream house from our wide selection of
           properties
         </p>
@@ -77,8 +78,6 @@ const ListedHouse = () => {
             <b>Yay! You have seen it all</b>
           </p>
         }
-    
-    
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
           {filteredHouses.map((house) => (

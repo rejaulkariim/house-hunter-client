@@ -23,14 +23,11 @@ const AddHouseForm = () => {
       picture: form.picture.value,
       description: form.description.value,
     };
-    console.log(formData);
+
     try {
       const token = localStorage.getItem("jwtToken");
-      console.log(token);
       const decodedToken = jwt_decode(token);
       formData.owner = decodedToken.userId;
-
-      console.log(decodedToken);
 
       // Check if the user's role is "house owner"
       if (decodedToken.role !== "house owner") {
@@ -81,84 +78,134 @@ const AddHouseForm = () => {
             />
           </div>
 
-          
           <div className="flex gap-4">
+            <div className="w-full">
+              <label className="label">
+                <span className="label-text text-sm">Your Address</span>
+              </label>
+              <input
+                type="text"
+                name="address"
+                placeholder="Address"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+
+            <div className="w-full">
+              <label className="label">
+                <span className="label-text text-sm">Your City</span>
+              </label>
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="w-full">
+              <label className="label">
+                <span className="label-text text-sm">Date</span>
+              </label>
+              <input
+                type="date"
+                name="availabilityDate"
+                placeholder="Available Date"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+
+            <div className="w-full">
+              <label className="label">
+                <span className="label-text text-sm">Phone</span>
+              </label>
+              <input
+                type="number"
+                name="phone"
+                placeholder="+880 is required"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <div>
+              <label className="label">
+                <span className="label-text text-sm">Bedrooms</span>
+              </label>
+              <input
+                type="number"
+                name="bedrooms"
+                placeholder="Bedroom"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+            <div>
+              <label className="label">
+                <span className="label-text text-sm">Bathrooms</span>
+              </label>
+              <input
+                type="number"
+                name="bathrooms"
+                placeholder="Bathrooms"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+            <div>
+              <label className="label">
+                <span className="label-text text-sm">Room Size</span>
+              </label>
+              <input
+                type="number"
+                name="roomSize"
+                placeholder="Room Size"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+            <div>
+              <label className="label">
+                <span className="label-text text-sm">Rent per Month</span>
+              </label>
+              <input
+                type="number"
+                name="rentPerMonth"
+                placeholder="Rent per month"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label className="label">
+              <span className="label-text text-sm">Image Url</span>
+            </label>
             <input
               type="text"
-              name="address"
-              placeholder="Address"
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              type="text"
-              name="city"
-              placeholder="City"
+              name="picture"
+              placeholder="Image url"
               className="input input-bordered w-full"
               required
             />
           </div>
-
-          <div className="flex gap-4">
-            <input
-              type="date"
-              name="availabilityDate"
-              placeholder="Available Date"
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              type="text"
-              name="phone"
-              placeholder="+880 is required"
-              className="input input-bordered w-full"
-              required
-            />
+          <div className="w-full">
+            <label className="label">
+              <span className="label-text text-sm">Descriptions</span>
+            </label>
+            <textarea
+              className="textarea textarea-bordered h-32 w-full"
+              name="description"
+              placeholder="Description"
+            ></textarea>
           </div>
-
-          <div className="flex gap-4">
-            <input
-              type="text"
-              name="bedrooms"
-              placeholder="Bedroom"
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              type="text"
-              name="bathrooms"
-              placeholder="Bathrooms"
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              type="text"
-              name="roomSize"
-              placeholder="Room Size"
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              type="text"
-              name="rentPerMonth"
-              placeholder="Rent per month"
-              className="input input-bordered w-full"
-              required
-            />
-          </div>
-
-          <input
-            type="text"
-            name="picture"
-            placeholder="Image url"
-            className="input input-bordered w-full"
-            required
-          />
-          <textarea
-            className="textarea textarea-bordered h-32"
-            name="description"
-            placeholder="Description"
-          ></textarea>
           <input
             type="submit"
             value="Submit House"
