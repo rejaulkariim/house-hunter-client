@@ -1,16 +1,14 @@
-// OwnerDashboard.js
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
+import DeleteHouseModal from "../components/DeleteHouseModal";
 
 const HouseOwnerDashboard = () => {
   const [houses, setHouses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  console.log(houses);
+  const [selectedHouseId, setSelectedHouseId] = useState(null);
 
   useEffect(() => {
-    // Fetch the houses listed by the logged-in user
     const fetchHouses = async () => {
       try {
         const token = localStorage.getItem("jwtToken");
@@ -23,7 +21,6 @@ const HouseOwnerDashboard = () => {
           }
         );
         setHouses(response.data);
-        console.log(response.data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -33,6 +30,30 @@ const HouseOwnerDashboard = () => {
 
     fetchHouses();
   }, []);
+
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem("jwtToken");
+      await axios.delete(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/api/user/houses/${selectedHouseId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSelectedHouseId(null);
+      // Remove the deleted house from the state immediately
+      setHouses((prevHouses) =>
+        prevHouses.filter((house) => house._id !== selectedHouseId)
+      );
+    } catch (error) {
+      // Handle error
+      console.log(error.response.data);
+    }
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -74,15 +95,27 @@ const HouseOwnerDashboard = () => {
                   >
                     Edit
                   </Button>
-                  <Button placeholder="Delete" variant="danger">
+                  <button
+                    className="py-2 px-4 rounded-md duration-300 cursor-pointer bg-error text-light hove:bg-warning/80"
+                    onClick={() =>
+                      setSelectedHouseId(house._id) &
+                      window.my_modal_1.showModal()
+                    } // Set the selected house ID to be deleted
+                  >
                     Delete
-                  </Button>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      <DeleteHouseModal
+        houseId={selectedHouseId}
+        onCancel={() => setSelectedHouseId(null)} // Clear the selected house ID when modal is closed
+        onDelete={handleDelete}
+      />
     </div>
   );
 };
