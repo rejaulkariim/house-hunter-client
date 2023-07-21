@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import BookingModal from "./BookingModal";
 import HouseCard from "./HouseCard";
 
 const ListedHouse = () => {
@@ -7,30 +8,34 @@ const ListedHouse = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [selectedHouse, setSelectedHouse] = useState(null);
+  console.log(selectedHouse);
   useEffect(() => {
+    const fetchHouses = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/user/get/houses`
+        );
+        setHouses(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
     fetchHouses();
   }, []);
-
-  const fetchHouses = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get( `${import.meta.env.VITE_API_BASE_URL}/api/user/get/houses`);
-      setHouses(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
   // Filter houses based on the search term
-  const filteredHouses = houses.filter((house) =>
-  house.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  house.address.toLowerCase().includes(searchTerm.toLowerCase())    
+  const filteredHouses = houses.filter(
+    (house) =>
+      house.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      house.address.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {
@@ -63,9 +68,14 @@ const ListedHouse = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
         {filteredHouses.map((house) => (
-          <HouseCard key={house._id} house={house} />
+          <HouseCard
+            key={house._id}
+            house={house}
+            setSelectedHouse={setSelectedHouse}
+          />
         ))}
       </div>
+      {selectedHouse ? <BookingModal selectedHouse={selectedHouse} setSelectedHouse={setSelectedHouse} /> : null}
     </div>
   );
 };

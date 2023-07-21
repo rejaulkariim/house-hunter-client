@@ -64,6 +64,7 @@ const HouseOwnerDashboard = () => {
       <h2 className="text-2xl text-accent text-center font-bold">
         Welcome to owner dashboard
       </h2>
+      <Button placeholder="Add a New House" href="/owner/dashboard/add-house" />
       <div className="overflow-x-auto mt-16">
         <table className="table-fixed w-full border-collapse rounded-md">
           <thead className="bg-dark text-light text-left">
