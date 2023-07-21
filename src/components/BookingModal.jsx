@@ -1,37 +1,57 @@
+import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+
 const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
-  const { name, address, phone } = selectedHouse;
-  console.log(selectedHouse)
+  const { name } = selectedHouse;
+
+  const [phone, setPhone] = useState("");
 
   const navigate = useNavigate();
 
   const token = localStorage.getItem("jwtToken");
   const decodedToken = jwtDecode(token);
-  console.log(decodedToken);
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const newBooking = {
-      user: decodedToken.name,
-      address: address,
-      house: selectedHouse,
-      phone: phone
-    };
+    const phoneRegex = /^(\+?8801|01)[3-9]\d{8}$/;
+    if (!phone.match(phoneRegex)) {
+      toast.error("Please provide a valid Bangladeshi phone number.");
+      return;
+    }
 
-    const existingBookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    try {
+      const token = localStorage.getItem("jwtToken");
+      const decodedToken = jwtDecode(token);
 
-    existingBookings.push(newBooking);
+      const newBooking = {
+        name: decodedToken.name,
+        email: decodedToken.email,
+        house: selectedHouse,
+        phone: phone,
+      };
 
-    localStorage.setItem("bookings", JSON.stringify(existingBookings));
+      // Make an API call to your backend to save the booking order
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/user/bookings`,
+        newBooking
+      );
 
-    toast.success("Booking Successful");
-    navigate("/renter/dashboard");
-    setSelectedHouse(null);
+      if (response.data.message) {
+        toast.success("Booking Successful");
+        navigate("/renter/dashboard");
+        setSelectedHouse(null);
+      } else {
+        toast.error("Failed to make a booking. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while processing your booking.");
+    }
   };
-
   return (
     <dialog id="bookingModal" className="modal">
       <form method="dialog" className="modal-box">
@@ -57,10 +77,12 @@ const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
           />
           <input
             type="text"
-            placeholder="address"
+            name="phone"
+            placeholder="+880 is a required"
             className="input input-bordered w-full"
-            defaultValue={phone}
-            disabled
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
           />
 
           <button
