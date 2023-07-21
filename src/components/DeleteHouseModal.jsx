@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const DeleteHouseModal = ({ houseName, onCancel, onDelete }) => {
+const DeleteHouseModal = ({ houseName, onCancel, onDelete, setSelectedHouseId }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
 
@@ -9,6 +9,7 @@ const DeleteHouseModal = ({ houseName, onCancel, onDelete }) => {
       setIsDeleting(true);
       await onDelete();
       setIsDeleting(false);
+      setSelectedHouseId(null)
     } catch (error) {
       setIsDeleting(false);
       setDeleteError("Error deleting the house. Please try again later.");
