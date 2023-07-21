@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const DeleteHouseModal = ({ houseName, onCancel, onDelete, setSelectedHouseId }) => {
+const DeleteHouseModal = ({
+  houseName,
+  onCancel,
+  onDelete,
+  setSelectedHouseId,
+}) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
 
@@ -8,8 +13,8 @@ const DeleteHouseModal = ({ houseName, onCancel, onDelete, setSelectedHouseId })
     try {
       setIsDeleting(true);
       await onDelete();
+      setSelectedHouseId(null);
       setIsDeleting(false);
-      setSelectedHouseId(null)
     } catch (error) {
       setIsDeleting(false);
       setDeleteError("Error deleting the house. Please try again later.");
@@ -19,13 +24,25 @@ const DeleteHouseModal = ({ houseName, onCancel, onDelete, setSelectedHouseId })
   return (
     <dialog id="my_modal_1" className="modal">
       <form method="dialog" className="modal-box">
-        <h3 className="font-bold text-lg">Are you sure you want to delete {houseName}?</h3>
-        <p className="py-4">Once you delete this, the action cannot be undone.</p>
+        <h3 className="font-bold text-lg">
+          Are you sure you want to delete {houseName}?
+        </h3>
+        <p className="py-4">
+          Once you delete this, the action cannot be undone.
+        </p>
         <div className="modal-action">
-          <button className="py-2 px-4 rounded-md duration-300 cursor-pointer bg-accent text-dark hove:bg-accent/90" onClick={onCancel} disabled={isDeleting}>
+          <button
+            className="py-2 px-4 rounded-md duration-300 cursor-pointer bg-accent text-dark hove:bg-accent/90"
+            onClick={onCancel}
+            disabled={isDeleting}
+          >
             Close
           </button>
-          <button className="py-2 px-4 rounded-md duration-300 cursor-pointer bg-error text-light hove:bg-error/90" onClick={handleDelete} disabled={isDeleting}>
+          <button
+            className="py-2 px-4 rounded-md duration-300 cursor-pointer bg-error text-light hove:bg-error/90"
+            onClick={handleDelete}
+            disabled={isDeleting}
+          >
             {isDeleting ? "Deleting..." : "Delete"}
           </button>
         </div>

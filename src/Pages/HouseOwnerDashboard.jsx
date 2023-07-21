@@ -51,12 +51,12 @@ const HouseOwnerDashboard = () => {
           },
         }
       );
-      setSelectedHouseId(null);
+      
       setHouses((prevHouses) =>
-        prevHouses.filter((house) => house._id !== selectedHouseId)
+      prevHouses.filter((house) => house._id !== selectedHouseId)
       );
+      setSelectedHouseId(null);
     } catch (error) {
-      // Handle error
       console.log(error.response.data);
     }
   };
@@ -120,7 +120,7 @@ const HouseOwnerDashboard = () => {
                       onClick={() =>
                         setSelectedHouseId(house._id) &
                         window.my_modal_1.showModal()
-                      } // Set the selected house ID to be deleted
+                      } 
                     >
                       Delete
                     </button>

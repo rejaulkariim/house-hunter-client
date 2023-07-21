@@ -37,7 +37,8 @@ const ListedHouse = () => {
   const filteredHouses = houses.filter(
     (house) =>
       house.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      house.address.toLowerCase().includes(searchTerm.toLowerCase())
+      house.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      house.city.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
 
   if (loading) {
@@ -50,7 +51,7 @@ const ListedHouse = () => {
 
   return (
     <div className="">
-      <h2 className="text-center text-2xl font-bold tracking-wider my-4">Search Your Desire House</h2>
+      <h2 className="text-center text-2xl font-bold tracking-wider my-4">Discover Your Dream Home</h2>
       <div className="flex justify-center">
         {/* search bar */}
         <div className="flex mb-4 w-[30rem] shadow-md rounded-lg">
