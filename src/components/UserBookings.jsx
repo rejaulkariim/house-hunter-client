@@ -42,7 +42,7 @@ const UserBookings = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {bookings.map((booking) => (
-            <BookingCard key={booking._id} booking={booking} />
+            <BookingCard key={booking._id} booking={booking} setBookings={setBookings} />
           ))}
         </div>
       )}
