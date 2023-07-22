@@ -54,11 +54,11 @@ const ListedHouse = () => {
       <h2 className="text-center text-2xl font-bold tracking-wider my-4">Discover Your Dream Home</h2>
       <div className="flex justify-center">
         {/* search bar */}
-        <div className="flex mb-4 w-[30rem] shadow-md rounded-lg">
+        <div className="flex mb-4 w-[30rem] shadow-md rounded-xl">
           <input
             type="text"
             placeholder="Search by house name or address"
-            className="input input-bordered w-full  tracking-wider text-sm "
+            className="input input-bordered w-full tracking-wider text-sm"
             value={searchTerm}
             onChange={handleSearch}
           />

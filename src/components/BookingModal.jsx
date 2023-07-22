@@ -34,7 +34,7 @@ const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
         phone: phone,
       };
       // Make an API call to your backend to fetch existing bookings for the user
-      const responsed = await axios.get(
+      const bookingData = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/api/user/bookings`,
         {
           headers: {
@@ -43,13 +43,13 @@ const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
         }
       );
 
-      const userBookings = responsed.data.userBookings || [];
+      const userBookings = bookingData.data.userBookings || [];
       const totalBookings = userBookings.length;
 
       // Check if the user has already booked 2 houses
       if (totalBookings >= 2) {
         toast.error(
-          "You can only book 2 houses please free up booking space to book again"
+          "Booking Limit Exceeded, You can only book up to 2 houses. Please free up booking space to proceed. Thank you!"
         );
         return;
       }
@@ -98,7 +98,7 @@ const BookingModal = ({ selectedHouse, setSelectedHouse }) => {
           <input
             type="text"
             name="phone"
-            placeholder="+880 is a required"
+            placeholder="880 is a required"
             className="input input-bordered w-full"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}

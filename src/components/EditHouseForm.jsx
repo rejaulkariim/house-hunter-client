@@ -47,13 +47,10 @@ const EditHouseForm = () => {
           },
         }
       );
-
-      // Handle success response
       console.log(response.data);
 
       navigate("/owner/dashboard");
     } catch (error) {
-      // Handle error
       console.log(error.response.data);
     }
   };
@@ -72,15 +69,23 @@ const EditHouseForm = () => {
           <h2 className="text-2xl font-bold">Update House Details</h2>
           <p>Please fill out form to update your house</p>
         </div>
-        <input
-          type="text"
-          name="name"
-          value={houseData.name}
-          onChange={(e) => setHouseData({ ...houseData, name: e.target.value })}
-          placeholder="Give your house a name"
-          className="input input-bordered w-full"
-          required
-        />
+        <div>
+          <label className="label">
+            <span className="label-text">Name</span>
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={houseData.name}
+            onChange={(e) =>
+              setHouseData({ ...houseData, name: e.target.value })
+            }
+            placeholder="Give your house a name"
+            className="input input-bordered w-full"
+            required
+          />
+        </div>
+
         <div className="flex gap-4">
           <div className="w-full">
             <label className="label">
@@ -188,6 +193,7 @@ const EditHouseForm = () => {
             />
           </div>
         </div>
+
         <div className="flex gap-4 mt-2">
           <div className="w-full">
             <label className="label">

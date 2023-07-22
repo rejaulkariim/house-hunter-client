@@ -33,7 +33,7 @@ function Navbar() {
   }
 
   return (
-    <div className="navbar bg-base-100">
+    <header className="navbar">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -57,71 +57,71 @@ function Navbar() {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to="/" className="text-dark">
+              <Link to="/" className="text-dark mr-2">
                 Home
               </Link>
             </li>
             <li>
               {" "}
-              <Link to="/contact" className="text-dark">
+              <Link to="/contact" className="text-dark mr-2">
                 Contact
               </Link>
             </li>
             <li>
-              <Link to="/about" className="text-dark">
+              <Link to="/about" className="text-dark mr-2">
                 About
               </Link>
             </li>
             {isHouseOwner ? (
               <li>
                 {" "}
-                <Link to="/owner/dashboard" className="text-dark">
+                <Link to="/owner/dashboard" className="text-dark mr-2">
                   Dashboard
                 </Link>
               </li>
             ) : (
               <li>
                 {" "}
-                <Link to="/renter/dashboard" className="text-dark">
+                <Link to="/renter/dashboard" className="text-dark mr-2">
                   Dashboard
                 </Link>
               </li>
             )}
           </ul>
         </div>
-        <Link to="/" className="font-bold text-xl">
+        <Link to="/" className="font-bold text-base md:text-xl">
           House Hunter
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to="/" className="text-dark">
+            <Link to="/" className="text-dark mr-2">
               Home
             </Link>
           </li>
           <li>
             {" "}
-            <Link to="/contact" className="text-dark">
+            <Link to="/contact" className="text-dark mr-2">
               Contact
             </Link>
           </li>
           <li>
-            <Link to="/about" className="text-dark">
+            <Link to="/about" className="text-dark mr-2">
               About
             </Link>
           </li>
           {isHouseOwner ? (
             <li>
               {" "}
-              <Link to="/owner/dashboard" className="text-dark">
+              <Link to="/owner/dashboard" className="text-dark mr-2">
                 Dashboard
               </Link>
             </li>
           ) : (
             <li>
               {" "}
-              <Link to="/renter/dashboard" className="text-dark">
+              <Link to="/renter/dashboard" className="text-dark mr-2">
                 Dashboard
               </Link>
             </li>
@@ -140,7 +140,7 @@ function Navbar() {
           <Button placeholder="Login" href="/login" color="green" />
         )}
       </div>
-    </div>
+    </header>
   );
 }
 
