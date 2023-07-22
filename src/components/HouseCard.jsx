@@ -1,11 +1,14 @@
+import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 const HouseCard = ({ house, setSelectedHouse }) => {
+  const formattedCreatedAt = format(
+    new Date(house.availabilityDate),
+    "MMM dd, yyyy"
+  );
 
-  
   const navigate = useNavigate();
   const token = localStorage.getItem("jwtToken");
-  
 
   const handleBookNowClick = () => {
     if (token) {
@@ -22,8 +25,6 @@ const HouseCard = ({ house, setSelectedHouse }) => {
       navigate("/login");
     }
   };
-
- 
 
   return (
     <div className="shadow-md rounded-md p-4">
@@ -52,14 +53,14 @@ const HouseCard = ({ house, setSelectedHouse }) => {
             <strong>Rent per Month:</strong> ${house.rentPerMonth}
           </p>
           <p>
-            <strong>Availability Date:</strong> {house.availabilityDate}
+            <strong>Availability Date:</strong> {formattedCreatedAt}
           </p>
           <p>
             <strong>Contact Phone:</strong> {house.phone}
           </p>
         </div>
         <button
-         onClick={handleBookNowClick}
+          onClick={handleBookNowClick}
           className="mt-4 w-full btn btn-accent"
         >
           Book Now
